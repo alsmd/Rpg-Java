@@ -1,6 +1,7 @@
 package org.doctor.scene.entity;
 
 import org.doctor.KeyHandler;
+import org.doctor.Sound;
 import org.doctor.map.WorldMap;
 
 import javax.imageio.ImageIO;
@@ -15,6 +16,7 @@ public class Player extends Entity{
         loadResources();
         this.initCollitionComponent(new Rectangle(10, 20, 28, 22));
         this.initAnimations();
+        sound.add("walk", "sounds/footsteps.wav");
     }
 
     // SETUP
@@ -36,11 +38,11 @@ public class Player extends Entity{
 
     private void initAnimations(){
         this.initAnimationComponent();
-        this.animationComponent.addAnimation("down", spriteSheet, new Point(0, 0), new Point(3, 0), new Point(16, 16), 3, 10);
-        this.animationComponent.addAnimation("up", spriteSheet, new Point(4, 0), new Point(7, 0), new Point(16, 16), 3, 10);
-        this.animationComponent.addAnimation("right", spriteSheet, new Point(0, 1), new Point(3, 1), new Point(16, 16), 3, 10);
-        this.animationComponent.addAnimation("left", spriteSheet, new Point(4, 1), new Point(7, 1), new Point(16, 16), 3, 10);
-        this.animationComponent.addAnimation("iddle", spriteSheet, new Point(2, 0), new Point(3, 0), new Point(16, 16), 3, 2);
+        this.animationComponent.addAnimation("down", spriteSheet, new Point(0, 0), new Point(3, 0), new Point(16, 16), worldMap.mapConfig.scale, 10);
+        this.animationComponent.addAnimation("up", spriteSheet, new Point(4, 0), new Point(7, 0), new Point(16, 16), worldMap.mapConfig.scale, 10);
+        this.animationComponent.addAnimation("right", spriteSheet, new Point(0, 1), new Point(3, 1), new Point(16, 16), worldMap.mapConfig.scale, 10);
+        this.animationComponent.addAnimation("left", spriteSheet, new Point(4, 1), new Point(7, 1), new Point(16, 16), worldMap.mapConfig.scale, 10);
+        this.animationComponent.addAnimation("iddle", spriteSheet, new Point(2, 0), new Point(3, 0), new Point(16, 16), worldMap.mapConfig.scale, 2);
         this.animationComponent.setActiveAnimation("iddle");
     }
 
@@ -53,6 +55,7 @@ public class Player extends Entity{
     }
     @Override
     public void update(){
+        boolean walking = true;
         Point copy = (Point) worldPosition.clone();
         if (worldMap.keyH.upPressed){
             animationComponent.setActiveAnimation("up");
@@ -70,10 +73,16 @@ public class Player extends Entity{
             animationComponent.setActiveAnimation("right");
             worldPosition.x += speed * (double)(1.f / 60);
         }
-        else
+        else{
             this.animationComponent.setActiveAnimation("iddle");
+            walking = false;
+        }
         if (collitionComponent.checkTileCollition() || collitionComponent.checkObjectsCollition())
             worldPosition.setLocation(copy);
+        if (walking)
+            sound.loop("walk");
+        else
+            sound.stop("walk");
         animationComponent.update();
     }
 }

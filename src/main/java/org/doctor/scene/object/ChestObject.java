@@ -14,6 +14,7 @@ public class ChestObject extends  SuperObject{
         super(config, map);
         loadResources();
         addAnimations();
+        sound.add("creak", "sounds/chest_creak.wav");
     }
 
 
@@ -56,6 +57,7 @@ public class ChestObject extends  SuperObject{
     @Override
     public void action() {
         animationComponent.setActiveAnimation("open");
+        sound.play("creak");
     }
 
 }

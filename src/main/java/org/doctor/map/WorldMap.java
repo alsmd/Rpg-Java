@@ -1,6 +1,7 @@
 package org.doctor.map;
 
 import org.doctor.KeyHandler;
+import org.doctor.Sound;
 import org.doctor.scene.entity.Player;
 import org.doctor.scene.object.SuperObject;
 
@@ -14,6 +15,7 @@ public class WorldMap{
     public Point screenSize = new Point(maxScreenGrid.x * mapConfig.scaledTileSize.x, maxScreenGrid.y * mapConfig.scaledTileSize.y);
 
     // Scene's ELEMENTS
+    Sound sound = new Sound();
     Camera camera = new Camera(this);
     public Layer layers[];
     public SuperObject objects[];
@@ -29,6 +31,8 @@ public class WorldMap{
         this.layers = mapConfig.getLayers();
         this.objects = mapConfig.getObjects();
         this.player = new Player(this, new Point(2 * mapConfig.scaledTileSize.x, 2 * mapConfig.scaledTileSize.x));
+        sound.add("background", "sounds/horror_background.wav");
+        sound.loop("background");
         // Window's handlers
         this.keyH = keyH;
         this.jPanel = jPanel;
@@ -51,6 +55,4 @@ public class WorldMap{
         }
         player.draw(g2);
     }
-
-
 }

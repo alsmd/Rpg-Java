@@ -1,14 +1,17 @@
 package org.doctor;
 
 import org.doctor.map.WorldMap;
+import org.doctor.states.MainState;
+import org.doctor.states.State;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Stack;
 
 public class GamePanel extends JPanel implements Runnable{
+    Stack<State> states = new Stack<>();
     Thread gameThread;
-    KeyHandler keyH = new KeyHandler();
-    WorldMap mainMap = new WorldMap(keyH, this);
+    public KeyHandler keyH = new KeyHandler();
     //FPS
     int FPS = 60;
     public GamePanel(){
@@ -16,6 +19,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        states.push(new MainState(this));
     }
 
     public void startGameThread(){
@@ -52,13 +56,19 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        mainMap.update();
+        if (states.size() > 0)
+            states.peek().update();
+        else
+            System.exit(0);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        mainMap.draw(g2);
+        if (states.size() > 0)
+            states.peek().draw(g2);
+        else
+            System.exit(0);
         g2.dispose();
     }
 

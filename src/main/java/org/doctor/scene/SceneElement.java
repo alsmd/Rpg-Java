@@ -1,5 +1,6 @@
 package org.doctor.scene;
 
+import org.doctor.Sound;
 import org.doctor.components.AnimationComponent;
 import org.doctor.components.CollitionComponent;
 import org.doctor.map.WorldMap;
@@ -22,6 +23,7 @@ public abstract  class SceneElement {
     // COMPONENTS
     public CollitionComponent collitionComponent = null;
     public AnimationComponent animationComponent = null;
+    public Sound sound = new Sound();
 
 
     //Constructors
