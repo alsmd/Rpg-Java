@@ -14,7 +14,7 @@ public class Player extends Entity{
         super(worldMap, worldPosition);
         initDefautlValues();
         loadResources();
-        this.initCollitionComponent(new Rectangle(10, 20, 28, 22));
+        this.initCollitionComponent(new Rectangle(14, 20, 18, 22));
         this.initAnimations();
         sound.add("walk", "sounds/footsteps.wav");
     }

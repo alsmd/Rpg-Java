@@ -2,6 +2,7 @@ package org.doctor;
 
 import org.doctor.map.WorldMap;
 import org.doctor.states.MainState;
+import org.doctor.states.MenuState;
 import org.doctor.states.State;
 
 import javax.swing.*;

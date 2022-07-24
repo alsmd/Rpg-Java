@@ -69,8 +69,8 @@ public class MapConfig {
     public SuperObject[] getObjects(){
         SuperObject objects[] = new SuperObject[1];
         ObjectConfig objConfig = new ObjectConfig(new Point(1 * scaledTileSize.x,1 * scaledTileSize.y), "images/chests.png");
-        objConfig.addAnimation("iddle", 2, tileSize, new Point(0, 0), new Point(0, 0));
-        objConfig.addAnimation("open", 3, tileSize, new Point(0, 0), new Point(2, 0));
+        objConfig.addAnimation("iddle", 2, tileSize, new Point(1, 0), new Point(1, 0));
+        objConfig.addAnimation("open", 3, tileSize, new Point(0, 0), new Point(0, 0));
         objects[0] = new ChestObject(objConfig, worldMap);
         objects[0].initCollitionComponent(new Rectangle(10, 28, 30, 15));
         return objects;

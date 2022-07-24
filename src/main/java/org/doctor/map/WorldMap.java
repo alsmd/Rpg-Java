@@ -10,9 +10,9 @@ import java.awt.*;
 
 public class WorldMap{
     // CONFIGURATION SETUP
-    public final Point maxScreenGrid = new Point(12, 12);
+    public Point screenSize = new Point(600, 600);
     public MapConfig mapConfig = new MapConfig(this);
-    public Point screenSize = new Point(maxScreenGrid.x * mapConfig.scaledTileSize.x, maxScreenGrid.y * mapConfig.scaledTileSize.y);
+    public final Point maxScreenGrid = new Point(screenSize.x / mapConfig.scaledTileSize.x, screenSize.y / mapConfig.scaledTileSize.x);
 
     // Scene's ELEMENTS
     Sound sound = new Sound();
