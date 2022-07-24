@@ -1,16 +1,13 @@
 package org.doctor.map;
 
-import org.doctor.object.ChestObject;
-import org.doctor.object.ObjectConfig;
-import org.doctor.object.SuperObject;
+import org.doctor.scene.object.ChestObject;
+import org.doctor.scene.object.ObjectConfig;
+import org.doctor.scene.object.SuperObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class MapConfig {
     BufferedImage spriteSheet;
@@ -61,6 +58,8 @@ public class MapConfig {
         }
     }
 
+    // GETTERS
+
     public Layer[] getLayers(){
         Layer layers[] = new Layer[1];
         layers[0] = new Layer(this);
@@ -73,7 +72,7 @@ public class MapConfig {
         objConfig.addAnimation("iddle", 2, tileSize, new Point(0, 0), new Point(0, 0));
         objConfig.addAnimation("open", 3, tileSize, new Point(0, 0), new Point(2, 0));
         objects[0] = new ChestObject(objConfig, worldMap);
-        objects[0].initCollitionComponent(new Rectangle(10, 28, 30, 15), worldMap);
+        objects[0].initCollitionComponent(new Rectangle(10, 28, 30, 15));
         return objects;
     }
 

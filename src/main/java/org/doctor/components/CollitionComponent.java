@@ -1,22 +1,18 @@
 package org.doctor.components;
 
-import org.doctor.entity.Entity;
-import org.doctor.entity.Player;
 import org.doctor.map.Layer;
 import org.doctor.map.WorldMap;
-import org.doctor.object.SuperObject;
+import org.doctor.scene.object.SuperObject;
 
 import java.awt.*;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class CollitionComponent {
     WorldMap    map;
     Point worldPosition;
     Point screenPosition;
+    public boolean has_collition = true;
 
     private Rectangle hitbox;
 
@@ -40,7 +36,7 @@ public class CollitionComponent {
         return coli;
     }
     private ArrayList<Layer.Tile> createRange(int x, int y){
-        ArrayList<Layer.Tile> range = new ArrayList<Layer.Tile>();
+        ArrayList<Layer.Tile> range = new ArrayList<>();
         add_range(range, x, y); //center
         add_range(range, x , y - 1); //up
         add_range(range, x , y + 1); //down
@@ -77,7 +73,7 @@ public class CollitionComponent {
         Rectangle hitboxCpy = getWorldHitbox();
         for (SuperObject obj : map.objects){
             Rectangle objHit = obj.collitionComponent.getWorldHitbox();
-            if (obj.collition && hitboxCpy.intersects(objHit))
+            if (obj.collitionComponent.has_collition && hitboxCpy.intersects(objHit))
                 return true;
         }
         return false;

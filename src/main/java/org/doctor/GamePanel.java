@@ -1,6 +1,5 @@
 package org.doctor;
 
-import org.doctor.entity.Player;
 import org.doctor.map.WorldMap;
 
 import javax.swing.*;

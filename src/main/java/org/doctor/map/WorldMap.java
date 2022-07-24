@@ -1,33 +1,41 @@
 package org.doctor.map;
 
 import org.doctor.KeyHandler;
-import org.doctor.entity.Player;
-import org.doctor.object.SuperObject;
+import org.doctor.scene.entity.Player;
+import org.doctor.scene.object.SuperObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class WorldMap{
+    // CONFIGURATION SETUP
     public final Point maxScreenGrid = new Point(12, 12);
+    public MapConfig mapConfig = new MapConfig(this);
+    public Point screenSize = new Point(maxScreenGrid.x * mapConfig.scaledTileSize.x, maxScreenGrid.y * mapConfig.scaledTileSize.y);
+
+    // Scene's ELEMENTS
     Camera camera = new Camera(this);
     public Layer layers[];
     public SuperObject objects[];
-    public MapConfig mapConfig = new MapConfig(this);
     public Player player;
+
+    // Window's handlers
     public KeyHandler keyH;
-    public Point screenSize = new Point(maxScreenGrid.x * mapConfig.scaledTileSize.x, maxScreenGrid.y * mapConfig.scaledTileSize.y);
     JPanel jPanel;
+
     public WorldMap(KeyHandler keyH, JPanel jPanel){
-        layers = mapConfig.getLayers();
-        objects = mapConfig.getObjects();
+
+        // Scene's ELEMENTS
+        this.layers = mapConfig.getLayers();
+        this.objects = mapConfig.getObjects();
+        this.player = new Player(this, new Point(2 * mapConfig.scaledTileSize.x, 2 * mapConfig.scaledTileSize.x));
+        // Window's handlers
         this.keyH = keyH;
         this.jPanel = jPanel;
-        player = new Player(this);
-        player.initCollitionComponent(new Rectangle(10, 20, 28, 22), this);
-        jPanel.setPreferredSize(new Dimension(screenSize.x, screenSize.y));
+        this.jPanel.setPreferredSize(new Dimension(screenSize.x, screenSize.y));
     }
+
+    // LOOP
     public void update(){
         player.update();
         for (SuperObject obj : objects)

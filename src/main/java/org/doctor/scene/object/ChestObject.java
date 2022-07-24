@@ -1,28 +1,23 @@
-package org.doctor.object;
+package org.doctor.scene.object;
 
 
 import org.doctor.map.WorldMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
 
 public class ChestObject extends  SuperObject{
-    WorldMap map;
-    boolean openning = false;
+
+    // Construcors
     public ChestObject(ObjectConfig config, WorldMap map){
-        this.config = config;
-        this.map = map;
-        this.worldPosition = config.worldPosition;
+        super(config, map);
         loadResources();
         addAnimations();
     }
 
-    @Override
-    public void action() {
-        animationComponent.setActiveAnimation("open");
-    }
+
+    // SETUP
 
     private void loadResources(){
         try{
@@ -34,25 +29,33 @@ public class ChestObject extends  SuperObject{
     private void addAnimations(){
         initAnimationComponent();
         for (ObjectConfig.AnimationConfig a : config.animations){
-            animationComponent.addAnimation(a.name, spriteSheet, a.beginAnimation, a.endAnimation, a.tileSize, map.mapConfig.scale, a.animationFps);
+            animationComponent.addAnimation(a.name, spriteSheet, a.beginAnimation, a.endAnimation, a.tileSize, worldMap.mapConfig.scale, a.animationFps);
         }
         animationComponent.setActiveAnimation("iddle");
     }
 
+
+    // LOOP
+
+    @Override
     public void draw(Graphics2D g2){
-        Rectangle objHit = collitionComponent.getScreenHitbox();
         animationComponent.draw(g2);
         g2.setColor(Color.RED);
-        g2.draw(objHit);
+        g2.draw(collitionComponent.getScreenHitbox());
     }
-
+    @Override
     public void update(){
-        if (map.keyH.open == true){
-            if (map.player.collitionComponent.checkSurround(this.collitionComponent)){
+        if (worldMap.keyH.open){
+            if (this.collitionComponent.checkSurround(worldMap.player.collitionComponent))
                 action();
-            }
         }
         animationComponent.update();
+    }
+
+    // ACTIONS
+    @Override
+    public void action() {
+        animationComponent.setActiveAnimation("open");
     }
 
 }

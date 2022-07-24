@@ -1,12 +1,12 @@
-package org.doctor.object;
+package org.doctor.scene.object;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class ObjectConfig {
-    ArrayList<AnimationConfig> animations = new ArrayList<AnimationConfig>();
-    Point worldPosition = new Point();
+    ArrayList<AnimationConfig> animations = new ArrayList<>();
+    Point worldPosition;
     String spriteSheetName;
     public ObjectConfig(Point worldPosition, String spriteSheetName){
         this.worldPosition = worldPosition;
@@ -15,7 +15,7 @@ public class ObjectConfig {
     public void addAnimation(String name, int animationFps, Point tileSize, Point beginAnimation, Point endAnimation){
         animations.add(new AnimationConfig(name, animationFps, tileSize, beginAnimation, endAnimation));
     }
-    public class AnimationConfig{
+    static public class AnimationConfig{
         String name;
         int animationFps;
         Point tileSize;

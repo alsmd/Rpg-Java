@@ -1,60 +1,32 @@
-package org.doctor.entity;
+package org.doctor.scene.entity;
 
-import org.doctor.GamePanel;
 import org.doctor.KeyHandler;
 import org.doctor.map.WorldMap;
-import org.doctor.object.SuperObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Player extends Entity{
-    KeyHandler keyH;
+    public Player(WorldMap worldMap, Point worldPosition) {
+        super(worldMap, worldPosition);
+        initDefautlValues();
+        loadResources();
+        this.initCollitionComponent(new Rectangle(10, 20, 28, 22));
+        this.initAnimations();
+    }
 
-
-    public Player(WorldMap worldMap) {
-        this.keyH = worldMap.keyH;
+    // SETUP
+    private void initDefautlValues(){
         screenPosition.x = worldMap.screenSize.x / 2 - worldMap.mapConfig.scaledTileSize.x / 2;
         screenPosition.y = worldMap.screenSize.y / 2 - worldMap.mapConfig.scaledTileSize.y / 2;
-        worldPosition.x = 2 * worldMap.mapConfig.scaledTileSize.x;
-        worldPosition.y = 2 * worldMap.mapConfig.scaledTileSize.y;
         size.width = worldMap.mapConfig.scaledTileSize.x;
         size.height = worldMap.mapConfig.scaledTileSize.y;
         speed = 200;
-        loadResources();
-       this.initAnimations();
     }
 
-    public void update(){
-        Point copy = (Point) worldPosition.clone();
-        if (keyH.upPressed == true){
-            animationComponent.setActiveAnimation("up");
-            worldPosition.y -= speed * (double)(1.f / 60);
-        }
-        else if (keyH.downPressed == true){
-            animationComponent.setActiveAnimation("down");
-            worldPosition.y += speed * (double)(1.f / 60);
-        }
-        else if (keyH.leftPressed == true){
-            animationComponent.setActiveAnimation("left");
-            worldPosition.x -= speed * (double)(1.f / 60);
-        }
-        else if (keyH.rightPressed == true){
-            animationComponent.setActiveAnimation("right");
-            worldPosition.x += speed * (double)(1.f / 60);
-        }
-        else
-            this.animationComponent.setActiveAnimation("iddle");
-        if (collitionComponent.checkTileCollition())
-            worldPosition.setLocation(copy);
-        if (collitionComponent.checkObjectsCollition())
-            worldPosition.setLocation(copy);
-        animationComponent.update();
-    }
-    public void loadResources(){
+    private void loadResources(){
         try{
             spriteSheet = ImageIO.read(new FileInputStream("images/mage.png"));
         }catch(IOException e){
@@ -72,10 +44,36 @@ public class Player extends Entity{
         this.animationComponent.setActiveAnimation("iddle");
     }
 
-
+    // LOOP
+    @Override
     public void draw(Graphics2D g2){
         g2.setColor(Color.RED);
         g2.draw(collitionComponent.getScreenHitbox());
         animationComponent.draw(g2);
+    }
+    @Override
+    public void update(){
+        Point copy = (Point) worldPosition.clone();
+        if (worldMap.keyH.upPressed){
+            animationComponent.setActiveAnimation("up");
+            worldPosition.y -= speed * (double)(1.f / 60);
+        }
+        else if (worldMap.keyH.downPressed){
+            animationComponent.setActiveAnimation("down");
+            worldPosition.y += speed * (double)(1.f / 60);
+        }
+        else if (worldMap.keyH.leftPressed){
+            animationComponent.setActiveAnimation("left");
+            worldPosition.x -= speed * (double)(1.f / 60);
+        }
+        else if (worldMap.keyH.rightPressed){
+            animationComponent.setActiveAnimation("right");
+            worldPosition.x += speed * (double)(1.f / 60);
+        }
+        else
+            this.animationComponent.setActiveAnimation("iddle");
+        if (collitionComponent.checkTileCollition() || collitionComponent.checkObjectsCollition())
+            worldPosition.setLocation(copy);
+        animationComponent.update();
     }
 }

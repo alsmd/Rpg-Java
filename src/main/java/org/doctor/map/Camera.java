@@ -1,7 +1,6 @@
 package org.doctor.map;
 
-import org.doctor.entity.Player;
-import org.doctor.object.SuperObject;
+import org.doctor.scene.object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
