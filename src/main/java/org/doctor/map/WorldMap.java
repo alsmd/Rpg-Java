@@ -17,7 +17,7 @@ public class WorldMap{
 
     // Scene's ELEMENTS
     public Sound sound = new Sound();
-    Camera camera = new Camera(this);
+    Camera camera;
     public Layer layers[];
     public SuperObject objects[];
     public Player player;
@@ -32,6 +32,7 @@ public class WorldMap{
         this.player = new Player(this, new Point(2 * mapConfig.scaledTileSize.x, 2 * mapConfig.scaledTileSize.x));
         sound.add("background", "sounds/horror_background.wav");
         sound.loop("background");
+        camera  = new Camera(player, mapConfig);
         // Window's handlers
         this.keyH = keyH;
     }

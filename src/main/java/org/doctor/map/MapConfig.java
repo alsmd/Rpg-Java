@@ -8,11 +8,15 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class MapConfig {
-    BufferedImage spriteSheet;
+    public BufferedImage spriteSheet;
+    public BufferedImage defaultBlock;
     public String spriteSheetPath;
     public String mapPath;
+    public ArrayList<Layer> layers = new ArrayList<>();
+
     String mapArray[][] = {
             {"0,0 1", "1,0 1", "1,0 1", "1,0 1", "6,3 1", "1,0 1", "1,0 1", "1,0 1", "1,0 1", "4,4 1", "1,0 1", "1,0 1", "1,0 1", "1,0 1", "1,0 1", "2,0 1"},
             {"0,1 1", "1,1 0", "1,1 0", "1,1 0", "1,1 0", "1,1 0", "1,1 0", "1,1 0", "1,1 0", "1,1 0", "1,1 0", "1,3 1", "1,1 0", "1,1 0", "1,1 0", "2,1 1"},
@@ -76,5 +80,7 @@ public class MapConfig {
         objects[0].initCollitionComponent(new Rectangle(10, 28, 30, 15));
         return objects;
     }
+
+
 
 }

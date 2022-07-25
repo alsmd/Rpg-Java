@@ -2,10 +2,17 @@ package org.doctor.states;
 
 import org.doctor.Game;
 import org.doctor.gui.GuiInput;
+import org.doctor.map.Camera;
+import org.doctor.map.Layer;
 import org.doctor.map.MapConfig;
+import org.doctor.scene.entity.CameraMan;
+import org.doctor.scene.entity.Player;
 
+import javax.swing.text.PlainDocument;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class EditState extends State{
@@ -21,10 +28,23 @@ public class EditState extends State{
     boolean next = true;
     GuiInput current = null;
 
+    // MOVIMENT
+    CameraMan cameraMan = new CameraMan(mapConfig, new Point(0, 0), game.keyH);
+    Camera camera = new Camera(cameraMan, mapConfig);
+
     // Constructors
     public EditState(Game game) {
         super(game);
-        setUpInputs();
+//        setUpInputs();
+
+        //DEBUG
+        setMapName("file");
+        setPathSpriteSheet("images/a.png");
+        setTileSize("16");
+        setScale("3");
+        setWidth("10");
+        setHeight("10");
+        initMapConfig();
     }
 
     // SETUP
@@ -69,6 +89,7 @@ public class EditState extends State{
             @Override
             public void actionPerformed(ActionEvent e) {
                 setHeight(e.getActionCommand());
+                initMapConfig();
                 next = true;
             }
         }));
@@ -99,7 +120,15 @@ public class EditState extends State{
         mapConfig.size.x = Integer.parseInt(height);
     }
 
-
+    public void initMapConfig(){
+        mapConfig.defaultBlock = new BufferedImage(mapConfig.tileSize.x, mapConfig.tileSize.y, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g2 = (Graphics2D) mapConfig.defaultBlock.getGraphics();
+        g2.setColor(Color.gray);
+        g2.fillRect(0, 0, mapConfig.tileSize.x, mapConfig.tileSize.y);
+        g2.dispose();
+        mapConfig.scaledTileSize = new Point(mapConfig.tileSize.x * mapConfig.scale, mapConfig.tileSize.y * mapConfig.scale);
+        mapConfig.layers.add(new Layer(mapConfig));
+    }
     // EVENTS
     @Override
     public void onClose() {
@@ -120,6 +149,19 @@ public class EditState extends State{
                 infoInputs.remove(0);
             }
             next = false;
+        }
+        if (infoInputs.isEmpty()){
+            cameraMan.update();
+        }
+    }
+
+    @Override
+    public void draw(Graphics2D g2){
+        super.draw(g2);
+        if (infoInputs.isEmpty()){
+            for (Layer layer : mapConfig.layers){
+                camera.drawLayer(g2, layer);
+            }
         }
     }
 

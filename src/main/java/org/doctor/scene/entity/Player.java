@@ -77,7 +77,7 @@ public class Player extends Entity{
             this.animationComponent.setActiveAnimation("iddle");
             walking = false;
         }
-        if (collitionComponent.checkTileCollition() || collitionComponent.checkObjectsCollition())
+        if (collitionComponent != null && collitionComponent.checkTileCollition() || collitionComponent.checkObjectsCollition())
             worldPosition.setLocation(copy);
         if (walking)
             sound.loop("walk");

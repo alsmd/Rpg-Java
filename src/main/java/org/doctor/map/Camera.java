@@ -1,5 +1,8 @@
 package org.doctor.map;
 
+import org.doctor.Game;
+import org.doctor.scene.entity.Entity;
+import org.doctor.scene.entity.Player;
 import org.doctor.scene.object.SuperObject;
 
 import java.awt.*;
@@ -7,17 +10,21 @@ import java.awt.image.BufferedImage;
 
 public class Camera{
     Point desloc = new Point();
-    WorldMap worldMap;
+    Entity entity;
 
-    public Camera(WorldMap worldMap) {
-        this.worldMap = worldMap;
+    public Camera(Entity entity, MapConfig mapConfig) {
+        this.entity = entity;
+        this.mapConfig = mapConfig;
     }
 
+    MapConfig mapConfig;
+
+
     public void update(){
-        desloc.x = worldMap.player.worldPosition.x / this.worldMap.mapConfig.scaledTileSize.x;
-        desloc.y = worldMap.player.worldPosition.y / this.worldMap.mapConfig.scaledTileSize.y;
-        desloc.x -= worldMap.player.screenPosition.x / this.worldMap.mapConfig.scaledTileSize.x;
-        desloc.y -= worldMap.player.screenPosition.y / this.worldMap.mapConfig.scaledTileSize.y;
+        desloc.x = entity.worldPosition.x / mapConfig.scaledTileSize.x;
+        desloc.y = entity.worldPosition.y / mapConfig.scaledTileSize.y;
+        desloc.x -= entity.screenPosition.x / mapConfig.scaledTileSize.x;
+        desloc.y -= entity.screenPosition.y / mapConfig.scaledTileSize.y;
         if (desloc.x < 0)
             desloc.x = 0;
         if (desloc.y < 0)
@@ -25,32 +32,39 @@ public class Camera{
     }
 
     public void drawLayer(Graphics2D g2, Layer layer){
-        for (int y_desloc = desloc.y - 1, y = 0; y < worldMap.maxScreenGrid.y + 2; y++, y_desloc++){
+        int maxScreenGridY = (int) (Game.HEIGHT / mapConfig.scaledTileSize.y);
+        int maxScreenGridX = (int) (Game.WIDTH / mapConfig.scaledTileSize.x);
+        for (int y_desloc = desloc.y - 1, y = 0; y < maxScreenGridY + 2; y++, y_desloc++){
             if (y_desloc < 0)
                 y_desloc = 0;
             if (y_desloc >= layer.tiles.size())
                 break ;
-            for (int x_desloc = desloc.x - 1, x = 0; x <  worldMap.maxScreenGrid.x + 2; x++, x_desloc++){
+            for (int x_desloc = desloc.x - 1, x = 0; x <  maxScreenGridX + 2; x++, x_desloc++){
                 if (x_desloc < 0)
                     x_desloc = 0;
                 if (x_desloc >= layer.tiles.get(y_desloc).size())
                     break;
                 Point location = new Point(
-                        layer.tiles.get(y_desloc).get(x_desloc).location.x * worldMap.mapConfig.tileSize.x,
-                        layer.tiles.get(y_desloc).get(x_desloc).location.y * worldMap.mapConfig.tileSize.y
+                        layer.tiles.get(y_desloc).get(x_desloc).location.x * mapConfig.tileSize.x,
+                        layer.tiles.get(y_desloc).get(x_desloc).location.y * mapConfig.tileSize.y
                 );
-                BufferedImage sprite = worldMap.mapConfig.spriteSheet.getSubimage(location.x, location.y,
-                        worldMap.mapConfig.tileSize.x, worldMap.mapConfig.tileSize.y);
+                BufferedImage sprite;
+                if (location.x < 0 ||  location.y < 0){
+                    sprite = mapConfig.defaultBlock;
+                }else{
+                    sprite = mapConfig.spriteSheet.getSubimage(location.x, location.y,
+                            mapConfig.tileSize.x, mapConfig.tileSize.y);
+                }
                 g2.drawImage(sprite,
-                        (x_desloc * worldMap.mapConfig.scaledTileSize.x) - worldMap.player.worldPosition.x + worldMap.player.screenPosition.x,
-                        (y_desloc * worldMap.mapConfig.scaledTileSize.y) - worldMap.player.worldPosition.y + worldMap.player.screenPosition.y,
-                        worldMap.mapConfig.scaledTileSize.x, worldMap.mapConfig.scaledTileSize.y, null);
+                        (x_desloc * mapConfig.scaledTileSize.x) - entity.worldPosition.x + entity.screenPosition.x,
+                        (y_desloc * mapConfig.scaledTileSize.y) - entity.worldPosition.y + entity.screenPosition.y,
+                        mapConfig.scaledTileSize.x, mapConfig.scaledTileSize.y, null);
             }
         }
     }
 
     public void setObjectScreenPos(SuperObject obj){
-        obj.screenPosition.x = obj.worldPosition.x - worldMap.player.worldPosition.x + worldMap.player.screenPosition.x;
-        obj.screenPosition.y = obj.worldPosition.y - worldMap.player.worldPosition.y + worldMap.player.screenPosition.y;
+        obj.screenPosition.x = obj.worldPosition.x - entity.worldPosition.x + entity.screenPosition.x;
+        obj.screenPosition.y = obj.worldPosition.y - entity.worldPosition.y + entity.screenPosition.y;
     }
 }

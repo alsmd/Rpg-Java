@@ -17,16 +17,17 @@ public class Layer {
         for (int y = 0; y < this.mapConfig.size.y; y++){
             this.tiles.add(new ArrayList<Tile>());
             for (int x = 0; x < this.mapConfig.size.x; x++) {
-                String pos[] = mapConfig.mapArray[y][x].split(" ")[0].split(",");
-                Tile tile = new Tile(new Point(Integer.parseInt(pos[0]), Integer.parseInt(pos[1])));
-                if (mapConfig.mapArray[y][x].split(" ")[1].contentEquals("1"))
-                    tile.collition = true;
+//                String pos[] = mapConfig.mapArray[y][x].split(" ")[0].split(",");
+                Tile tile = new Tile(new Point(-1, -1));
                 tile.gridPos = new Point(x, y);
+//                if (mapConfig.mapArray[y][x].split(" ")[1].contentEquals("1"))
+//                    tile.collition = true;
+
                 this.tiles.get(y).add(tile);
-                tile.hitbox = new Rectangle(
-                        new Point(x * mapConfig.scaledTileSize.x, y * mapConfig.scaledTileSize.x),
-                        new Dimension(mapConfig.scaledTileSize.x, mapConfig.scaledTileSize.y)
-                );
+//                tile.hitbox = new Rectangle(
+//                        new Point(x * mapConfig.scaledTileSize.x, y * mapConfig.scaledTileSize.x),
+//                        new Dimension(mapConfig.scaledTileSize.x, mapConfig.scaledTileSize.y)
+//                );
             }
         }
     }
