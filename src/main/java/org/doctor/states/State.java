@@ -1,24 +1,57 @@
 package org.doctor.states;
 
-import org.doctor.GamePanel;
+import org.doctor.Game;
 import org.doctor.KeyHandler;
+import org.doctor.gui.GuiPanel;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.Stack;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
-public abstract class State {
-    GamePanel panel;
+public abstract class State{
+    GuiPanel panel = new GuiPanel();
+    Game game;
+    public KeyHandler keyH;
 
 
-    public State(GamePanel panel){
-       this.panel = panel;
+    public State(Game game){
+        keyH = game.keyH;
+       this.game = game;
+    }
+
+    public abstract void onClose();
+
+    // LOOP
+    public void draw(Graphics2D g2){
+        panel.draw(g2);
+    }
+
+    public void update() {
+        panel.update();
     }
 
 
-    // LOOP
-    public abstract void draw(Graphics2D g2);
+    public void mousePressed(MouseEvent e){
+        panel.mousePressed(e);
+    }
 
-    public abstract void update();
+    public void mouseReleased(MouseEvent e){
+        panel.mouseReleased(e);
+    }
+
+    public void mouseDragged(MouseEvent e){
+        panel.mouseDragged(e);
+    }
+
+    public void mouseMoved(MouseEvent e){
+        panel.mouseMoved(e);
+    }
+    public void keyTyped(KeyEvent e) {
+        panel.keyTyped(e);
+    }
+
+    public void keyPressed(KeyEvent e){
+        panel.keyPressed(e);
+    }
 
 }

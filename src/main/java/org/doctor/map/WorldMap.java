@@ -1,5 +1,6 @@
 package org.doctor.map;
 
+import org.doctor.Game;
 import org.doctor.KeyHandler;
 import org.doctor.Sound;
 import org.doctor.scene.entity.Player;
@@ -10,12 +11,12 @@ import java.awt.*;
 
 public class WorldMap{
     // CONFIGURATION SETUP
-    public Point screenSize = new Point(600, 600);
+    public Point screenSize = new Point(Game.WIDTH, Game.HEIGHT);
     public MapConfig mapConfig = new MapConfig(this);
     public final Point maxScreenGrid = new Point(screenSize.x / mapConfig.scaledTileSize.x, screenSize.y / mapConfig.scaledTileSize.x);
 
     // Scene's ELEMENTS
-    Sound sound = new Sound();
+    public Sound sound = new Sound();
     Camera camera = new Camera(this);
     public Layer layers[];
     public SuperObject objects[];
@@ -23,10 +24,8 @@ public class WorldMap{
 
     // Window's handlers
     public KeyHandler keyH;
-    JPanel jPanel;
 
-    public WorldMap(KeyHandler keyH, JPanel jPanel){
-
+    public WorldMap(KeyHandler keyH){
         // Scene's ELEMENTS
         this.layers = mapConfig.getLayers();
         this.objects = mapConfig.getObjects();
@@ -35,8 +34,6 @@ public class WorldMap{
         sound.loop("background");
         // Window's handlers
         this.keyH = keyH;
-        this.jPanel = jPanel;
-        this.jPanel.setPreferredSize(new Dimension(screenSize.x, screenSize.y));
     }
 
     // LOOP

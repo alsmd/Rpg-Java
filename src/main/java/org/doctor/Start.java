@@ -1,23 +1,23 @@
 package org.doctor;
 
-
 import javax.swing.*;
 
-public class Main {
+public class Start {
     public static void main(String[] args) {
+        Game game = new Game();
+
         JFrame window = new JFrame();
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Rpg");
 
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
+        window.add(game);
         window.pack();
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        gamePanel.startGameThread();
+        game.start();
     }
 }
