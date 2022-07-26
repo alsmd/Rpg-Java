@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class GuiButton  implements  GuiElement{
 
     private State currentState = State.RELEASED;
-    private Rectangle clickBox;
+    public Rectangle clickBox;
     private ArrayList<ActionListener> actionListeners;
     private String text = "";
 
@@ -20,6 +20,7 @@ public class GuiButton  implements  GuiElement{
     private Color hover;
     private Color pressed;
     private Font font = new Font("Arial",  Font.PLAIN, 18);
+    private boolean is_pressed = false;
 
     public GuiButton(int x, int y, int width, int height){
         clickBox = new Rectangle(x, y, width, height);
@@ -59,15 +60,18 @@ public class GuiButton  implements  GuiElement{
         actionListeners.add(listener);
     }
     public void mousePressed(MouseEvent e){
-        if (clickBox.contains(e.getPoint()))
+        if (clickBox.contains(e.getPoint())){
             currentState = State.PRESSED;
+            is_pressed = true;
+        }
     }
 
     public void mouseReleased(MouseEvent e){
-        if (clickBox.contains(e.getPoint())){
+        if (clickBox.contains(e.getPoint()) && is_pressed){
             for (ActionListener al : actionListeners)
                 al.actionPerformed(null);
         }
+        is_pressed = false;
         currentState = State.RELEASED;
     }
 
@@ -97,6 +101,10 @@ public class GuiButton  implements  GuiElement{
 
     }
 
+
+    public void setY(int y){
+        clickBox.y = y;
+    }
     public int getX(){
         return clickBox.x;
     }
@@ -115,5 +123,10 @@ public class GuiButton  implements  GuiElement{
 
     public void setText(String text){
         this.text = text;
+    }
+
+    public void activeEvent(){
+        for (ActionListener al : actionListeners)
+            al.actionPerformed(null);
     }
 }

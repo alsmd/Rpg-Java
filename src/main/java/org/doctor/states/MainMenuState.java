@@ -2,6 +2,7 @@ package org.doctor.states;
 
 import org.doctor.Game;
 import org.doctor.gui.MenuPanel;
+import org.doctor.states.edit.EditState;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,11 @@ public class MainMenuState extends State{
 
     @Override
     public void onClose() {
+
+    }
+
+    @Override
+    public void onBuild() {
 
     }
 

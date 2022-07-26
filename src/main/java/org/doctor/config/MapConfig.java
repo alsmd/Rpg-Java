@@ -1,5 +1,7 @@
-package org.doctor.map;
+package org.doctor.config;
 
+import org.doctor.map.Layer;
+import org.doctor.map.WorldMap;
 import org.doctor.scene.object.ChestObject;
 import org.doctor.scene.object.ObjectConfig;
 import org.doctor.scene.object.SuperObject;
@@ -54,33 +56,41 @@ public class MapConfig {
     public int scale = 3;
     public Point scaledTileSize = new Point(tileSize.x * scale, tileSize.y * scale);
     WorldMap worldMap;
+
+
+
+    //
+
     public MapConfig(WorldMap worldMap){
-        try{
-            this.worldMap = worldMap;
-             spriteSheet = ImageIO.read(new FileInputStream("images/simple_block_sheet.png"));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try{
+//            this.worldMap = worldMap;
+//             spriteSheet = ImageIO.read(new FileInputStream("images/simple_block_sheet.png"));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+    }
+
+    public MapConfig(){
+
     }
 
     // GETTERS
 
     public Layer[] getLayers(){
-        Layer layers[] = new Layer[1];
-        layers[0] = new Layer(this);
-        return layers;
+//        Layer layers[] = new Layer[1];
+//        layers[0] = new Layer(this);
+//        return layers;
+        return null;
     }
 
     public SuperObject[] getObjects(){
-        SuperObject objects[] = new SuperObject[1];
-        ObjectConfig objConfig = new ObjectConfig(new Point(1 * scaledTileSize.x,1 * scaledTileSize.y), "images/chests.png");
-        objConfig.addAnimation("iddle", 2, tileSize, new Point(1, 0), new Point(1, 0));
-        objConfig.addAnimation("open", 3, tileSize, new Point(0, 0), new Point(0, 0));
-        objects[0] = new ChestObject(objConfig, worldMap);
-        objects[0].initCollitionComponent(new Rectangle(10, 28, 30, 15));
-        return objects;
+//        SuperObject objects[] = new SuperObject[1];
+//        ObjectConfig objConfig = new ObjectConfig(new Point(1 * scaledTileSize.x,1 * scaledTileSize.y), "images/chests.png");
+//        objConfig.addAnimation("iddle", 2, tileSize, new Point(1, 0), new Point(1, 0));
+//        objConfig.addAnimation("open", 3, tileSize, new Point(0, 0), new Point(0, 0));
+//        objects[0] = new ChestObject(objConfig, worldMap);
+//        objects[0].initCollitionComponent(new Rectangle(10, 28, 30, 15));
+//        return objects;
+        return null;
     }
-
-
-
 }

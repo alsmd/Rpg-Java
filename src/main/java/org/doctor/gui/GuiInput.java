@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class GuiInput implements GuiElement{
+    public String name;
     private GuiInput.State currentState = GuiInput.State.NOFOCUS;
     private Rectangle clickBox;
     private ActionListener actionListener;
@@ -32,6 +33,15 @@ public class GuiInput implements GuiElement{
         noFocus = new Color(150, 156, 158);
         this.actionListener =  actionListener;
         this.placeholder = placeholder;
+    }
+
+    public GuiInput(String placeholder, int x, int y, int width, int height, ActionListener actionListener, String name){
+        clickBox = new Rectangle(x, y, width, height);
+        focus = new Color(173, 177, 179);
+        noFocus = new Color(150, 156, 158);
+        this.actionListener =  actionListener;
+        this.placeholder = placeholder;
+        this.name = name;
     }
 
     @Override
@@ -69,7 +79,7 @@ public class GuiInput implements GuiElement{
         if (currentState == State.FOCUS){
             if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && !text.isEmpty()) //backspace
                 text.delete(text.length() - 1, text.length());
-            else if (e.getKeyCode() == KeyEvent.VK_ENTER){
+            else if (e.getKeyCode() == KeyEvent.VK_ENTER && actionListener != null){
                 actionListener.actionPerformed(new ActionEvent(this, 0, text.toString()));
                 text.delete(0, text.length());
             }
@@ -109,5 +119,27 @@ public class GuiInput implements GuiElement{
                 (int) (clickBox.y + clickBox.getHeight() / 2 + DrawUtils.getMessageHeight(text.toString(), font, g2) / 2)
         );
 
+    }
+    public void clear(){
+        text.delete(0, text.length());
+    }
+    public int getX(){
+        return clickBox.x;
+    }
+
+    public int getY(){
+        return clickBox.y;
+    }
+
+    public int getWidth(){
+        return clickBox.width;
+    }
+
+    public int getHeight(){
+        return clickBox.height;
+    }
+
+    public String getText() {
+        return text.toString();
     }
 }

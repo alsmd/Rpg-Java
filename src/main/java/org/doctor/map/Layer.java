@@ -1,7 +1,8 @@
 package org.doctor.map;
 
+import org.doctor.config.MapConfig;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Layer {
@@ -19,7 +20,6 @@ public class Layer {
             for (int x = 0; x < this.mapConfig.size.x; x++) {
 //                String pos[] = mapConfig.mapArray[y][x].split(" ")[0].split(",");
                 Tile tile = new Tile(new Point(-1, -1));
-                tile.gridPos = new Point(x, y);
 //                if (mapConfig.mapArray[y][x].split(" ")[1].contentEquals("1"))
 //                    tile.collition = true;
 
@@ -32,14 +32,18 @@ public class Layer {
         }
     }
 
-    public class Tile{
+    static public class Tile{
+        /// Informations
+        public boolean collition;
         public Point location;
-        public Point gridPos;
+
+        ///
         public Rectangle hitbox;
-        public boolean collition = false;
 
         public Tile(Point location){
             this.location = location;
         }
+
+        public Tile(){}
     }
 }

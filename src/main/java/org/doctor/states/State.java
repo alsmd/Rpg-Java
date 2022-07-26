@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public abstract class State{
-    GuiPanel panel = new GuiPanel();
-    Game game;
+    public GuiPanel panel = new GuiPanel();
+    public Game game;
     public KeyHandler keyH;
 
 
@@ -20,6 +20,7 @@ public abstract class State{
     }
 
     public abstract void onClose();
+    public abstract void onBuild();
 
     // LOOP
     public void draw(Graphics2D g2){

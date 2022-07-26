@@ -2,25 +2,26 @@ package org.doctor.scene.entity;
 
 import org.doctor.Game;
 import org.doctor.KeyHandler;
-import org.doctor.map.MapConfig;
+import org.doctor.config.MapConfig;
+import org.doctor.config.TileMapConfig;
 
 import java.awt.*;
 
 public class CameraMan extends Entity{
 
-    MapConfig mapConfig;
+    TileMapConfig tileMapConfig;
     KeyHandler keyH;
-    public CameraMan(MapConfig mapConfig, Point worldPosition, KeyHandler keyH) {
+    public CameraMan(TileMapConfig tileMapConfig, Point worldPosition, KeyHandler keyH) {
         super(null, worldPosition);
-        this.mapConfig = mapConfig;
+        this.tileMapConfig = tileMapConfig;
         this.keyH = keyH;
         initDefautlValues();
     }
 
     // SETUP
     private void initDefautlValues(){
-        screenPosition.x = Game.WIDTH / 2 - mapConfig.scaledTileSize.x / 2;
-        screenPosition.y = Game.HEIGHT / 2 - mapConfig.scaledTileSize.y / 2;
+        screenPosition.x = Game.WIDTH / 2 - tileMapConfig.tileSizeScaled / 2;
+        screenPosition.y = Game.HEIGHT / 2 - tileMapConfig.tileSizeScaled / 2;
         speed = 400;
     }
     // LOOP

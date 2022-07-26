@@ -24,6 +24,11 @@ public class MainState extends State{
     }
 
     @Override
+    public void onBuild() {
+
+    }
+
+    @Override
     public void draw(Graphics2D g2) {
         map.draw(g2);
         super.draw(g2);

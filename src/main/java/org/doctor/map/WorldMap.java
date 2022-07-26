@@ -3,10 +3,10 @@ package org.doctor.map;
 import org.doctor.Game;
 import org.doctor.KeyHandler;
 import org.doctor.Sound;
+import org.doctor.config.MapConfig;
 import org.doctor.scene.entity.Player;
 import org.doctor.scene.object.SuperObject;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class WorldMap{
@@ -32,7 +32,7 @@ public class WorldMap{
         this.player = new Player(this, new Point(2 * mapConfig.scaledTileSize.x, 2 * mapConfig.scaledTileSize.x));
         sound.add("background", "sounds/horror_background.wav");
         sound.loop("background");
-        camera  = new Camera(player, mapConfig);
+//        camera  = new Camera(player, mapConfig);
         // Window's handlers
         this.keyH = keyH;
     }
@@ -45,8 +45,8 @@ public class WorldMap{
         camera.update();
     }
     public void draw(Graphics2D g2){
-        for (Layer layer : layers)
-            camera.drawLayer(g2, layer);
+//        for (Layer layer : layers)
+//            camera.drawLayer(g2, layer);
         for (SuperObject obj : objects){
             camera.setObjectScreenPos(obj);
             obj.draw(g2);

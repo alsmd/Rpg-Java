@@ -12,6 +12,7 @@ public class ParserTest {
         try{
 //            JsonNode data = objectMapper.readTree(new File("map.json"));
             TileMapConfig map = objectMapper.readValue(new File("map.json"), TileMapConfig.class);
+//            objectMapper.createObjectNode()
             map.printInfo();
         }catch (Exception e){
             e.printStackTrace();
