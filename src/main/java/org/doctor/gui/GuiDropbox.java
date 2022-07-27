@@ -19,24 +19,38 @@ public class GuiDropbox extends GuiPanel{
     private Font font = new Font("Arial",  Font.BOLD, 22);
     Stack<GuiButton> buttons = new Stack<>();
 
+    ActionListener action;
+
     private boolean droped = false;
 
-    public GuiDropbox(int buttonWidth, int buttonHeight, int startX, int startY) {
+    public GuiDropbox(int buttonWidth, int buttonHeight, int startX, int startY, ActionListener action) {
         this.buttonWidth = buttonWidth;
         this.buttonHeight = buttonHeight;
         this.startX = startX;
         this.startY = startY;
+        this.action = action;
     }
 
-    public GuiDropbox(String title, int buttonWidth, int buttonHeight, int startX, int startY) {
+    public GuiDropbox(String title, int buttonWidth, int buttonHeight, int startX, int startY, ActionListener action) {
         this.title = title;
         this.buttonWidth = buttonWidth;
         this.buttonHeight = buttonHeight;
         this.startX = startX;
         this.startY = startY;
+        this.action = action;
     }
 
-    public void addButton(String text, ActionListener al){
+    public void setDefault(String text){
+        for (GuiButton btn : buttons){
+            if (btn.getText().contentEquals(text)){
+                elements.clear();
+                elements.push(btn);
+                break ;
+            }
+        }
+    }
+
+    public void addField(String text){
         int buttonStartY;
         if (buttons.size() == 0)
             buttonStartY = startY;
@@ -44,7 +58,6 @@ public class GuiDropbox extends GuiPanel{
             buttonStartY = buttons.peek().getY() + buttonHeight;
         GuiButton newButton = new GuiButton(startX, buttonStartY, buttonWidth, buttonHeight);
         newButton.setText(text);
-        newButton.addActionListener(al);
         if (elements.size() == 0)
             super.add(newButton);
         buttons.add(newButton);
@@ -70,6 +83,7 @@ public class GuiDropbox extends GuiPanel{
                 if (droped){
                     droped = false;
                     elements.clear();
+                    action.actionPerformed(new ActionEvent(this, 0, button.getText()));
                     button.activeEvent();
                     elements.push(button);
                     break ;

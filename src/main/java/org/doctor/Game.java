@@ -25,6 +25,8 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
 
     /////
+    public static Point mousePos = new Point();
+    public static final int frames=  60;
     public static final int WIDTH = 600;
     public static final int LAYERS = 5;
     public static final int HEIGHT = 500;
@@ -97,6 +99,8 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     public void popState(){
         states.pop().onClose();
+        if (states.size() > 0)
+            states.peek().onBack();
     }
     public void update(){
         if (states.size() > 0)
@@ -110,7 +114,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         for (State state : states)
             state.draw(g2);
         g2.setColor(Color.white);
-        g2.drawString("fps: " + Integer.toString(fpsCount), 30, 30);
+//        g2.drawString("fps: " + Integer.toString(fpsCount), 30, 30);
         g2.dispose();
     }
 
@@ -134,10 +138,12 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        Game.mousePos = e.getPoint();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        Game.mousePos = e.getPoint();
         if (states.size() > 0){
             states.peek().mousePressed(e);
         }
@@ -147,6 +153,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        Game.mousePos = e.getPoint();
         if (states.size() > 0){
             states.peek().mouseReleased(e);
         }
@@ -165,6 +172,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        Game.mousePos = e.getPoint();
         if (states.size() > 0){
             states.peek().mouseDragged(e);
         }
@@ -174,6 +182,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        Game.mousePos = e.getPoint();
         if (states.size() > 0){
             states.peek().mouseMoved(e);
         }

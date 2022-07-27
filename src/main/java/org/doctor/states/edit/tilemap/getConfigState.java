@@ -83,6 +83,11 @@ class getConfigState extends State {
     }
 
     @Override
+    public void onBack() {
+
+    }
+
+    @Override
     public void update(){
         super.update();
         if (newForm != null){

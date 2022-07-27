@@ -14,9 +14,9 @@ import java.io.FileInputStream;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TileMapConfig{
     @JsonIgnore
-    private BufferedImage spriteSheet;
+    public BufferedImage spriteSheet;
     @JsonIgnore
-    private BufferedImage defaultBlock;
+    public BufferedImage defaultBlock;
 
     public String mapName;
     public int tileSize;
@@ -35,7 +35,7 @@ public class TileMapConfig{
             spriteSheet = ImageIO.read(new FileInputStream(spriteSheetPath));
             defaultBlock = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_4BYTE_ABGR);
             Graphics2D g2 = (Graphics2D) defaultBlock.getGraphics();
-            g2.setColor(Color.gray);
+            g2.setColor(new Color(189, 163, 163, 12));
             g2.fillRect(0, 0, tileSize, tileSize);
             g2.dispose();
             return true;

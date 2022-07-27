@@ -32,6 +32,11 @@ public class EditState extends State {
 
     }
 
+    @Override
+    public void onBack() {
+
+    }
+
     public void setupMenu(){
         menu = new MenuPanel(buttonWidth, buttonHeight, startY, spacing);
         menu.addButton("Edit Tilemap", new ActionListener() {

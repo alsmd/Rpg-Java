@@ -15,6 +15,7 @@ public class GuiButton  implements  GuiElement{
     public Rectangle clickBox;
     private ArrayList<ActionListener> actionListeners;
     private String text = "";
+    private String value = "";
 
     private Color released;
     private Color hover;
@@ -123,6 +124,18 @@ public class GuiButton  implements  GuiElement{
 
     public void setText(String text){
         this.text = text;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public void activeEvent(){
