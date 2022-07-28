@@ -56,4 +56,7 @@ public abstract class State{
         panel.keyPressed(e);
     }
 
+    public void keyReleased(KeyEvent e) {
+    }
+
 }

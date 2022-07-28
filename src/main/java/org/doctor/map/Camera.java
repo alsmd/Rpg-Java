@@ -54,8 +54,8 @@ public class Camera{
                 if (x_desloc >= config.width)
                     break;
                 Point location = new Point(
-                        layer[y][x].location.x * tileMapConfig.tileSize,
-                        layer[y][x].location.y * tileMapConfig.tileSize
+                        layer[y_desloc][x_desloc].location.x * tileMapConfig.tileSize,
+                        layer[y_desloc][x_desloc].location.y * tileMapConfig.tileSize
                 );
                 BufferedImage sprite;
                 if (location.x < 0 ||  location.y < 0){
@@ -71,6 +71,33 @@ public class Camera{
             }
         }
     }
+    public void drawCollitionLayer(Graphics2D g2, TileMapConfig.Tile layer[][], TileMapConfig config){
+        int maxScreenGridY = (int) (Game.HEIGHT / tileMapConfig.tileSizeScaled);
+        int maxScreenGridX = (int) (Game.WIDTH / tileMapConfig.tileSizeScaled);
+        for (int y_desloc = desloc.y - 1, y = 0; y < maxScreenGridY + 2; y++, y_desloc++){
+            if (y_desloc < 0)
+                y_desloc = 0;
+            if (y_desloc >= config.height)
+                break ;
+            for (int x_desloc = desloc.x - 1, x = 0; x <  maxScreenGridX + 2; x++, x_desloc++){
+                if (x_desloc < 0)
+                    x_desloc = 0;
+                if (x_desloc >= config.width)
+                    break;
+                if (layer[y_desloc][x_desloc].collition){
+                    var hitbox = new Rectangle(
+                            (x_desloc * tileMapConfig.tileSizeScaled) - entity.worldPosition.x + entity.screenPosition.x + layer[y_desloc][x_desloc].hitbox.x,
+                            (y_desloc * tileMapConfig.tileSizeScaled) - entity.worldPosition.y + entity.screenPosition.y + layer[y_desloc][x_desloc].hitbox.y,
+                            layer[y_desloc][x_desloc].hitbox.width, layer[y_desloc][x_desloc].hitbox.heigth
+                    );
+                    g2.setColor(new Color(234, 3, 3, 148));
+                    g2.fill(hitbox);
+                    g2.draw(hitbox);
+                }
+            }
+        }
+    }
+
 
     public void setObjectScreenPos(SuperObject obj){
         obj.screenPosition.x = obj.worldPosition.x - entity.worldPosition.x + entity.screenPosition.x;

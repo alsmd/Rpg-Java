@@ -8,6 +8,7 @@ import org.doctor.states.State;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class Game extends JPanel implements KeyListener, MouseListener, MouseMotionListener, Runnable{
@@ -25,6 +26,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
 
     /////
+    public static ArrayList<Point> cliked = new ArrayList<>();
     public static Point mousePos = new Point();
     public static final int frames=  60;
     public static final int WIDTH = 600;
@@ -133,7 +135,8 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if (states.size() > 0)
+            states.peek().keyReleased(e);
     }
 
     @Override
@@ -144,6 +147,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     @Override
     public void mousePressed(MouseEvent e) {
         Game.mousePos = e.getPoint();
+        cliked.clear();
         if (states.size() > 0){
             states.peek().mousePressed(e);
         }
@@ -154,6 +158,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     @Override
     public void mouseReleased(MouseEvent e) {
         Game.mousePos = e.getPoint();
+        cliked.clear();
         if (states.size() > 0){
             states.peek().mouseReleased(e);
         }
@@ -172,6 +177,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        cliked.clear();
         Game.mousePos = e.getPoint();
         if (states.size() > 0){
             states.peek().mouseDragged(e);
@@ -182,6 +188,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        cliked.clear();
         Game.mousePos = e.getPoint();
         if (states.size() > 0){
             states.peek().mouseMoved(e);

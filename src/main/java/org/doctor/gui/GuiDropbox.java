@@ -78,8 +78,11 @@ public class GuiDropbox extends GuiPanel{
     }
 
     public void mousePressed(MouseEvent e){
+        if (Game.cliked.contains(e.getPoint()))
+            return ;
         for (GuiButton button : buttons){
             if (button.clickBox.contains(e.getPoint())){
+                Game.cliked.add(e.getPoint());
                 if (droped){
                     droped = false;
                     elements.clear();

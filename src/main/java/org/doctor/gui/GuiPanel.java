@@ -3,11 +3,11 @@ package org.doctor.gui;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class GuiPanel implements GuiElement{
-
     public Stack<GuiElement> elements = new Stack<>();
 
     public GuiPanel(){
@@ -34,8 +34,11 @@ public class GuiPanel implements GuiElement{
     }
 
     public void mousePressed(MouseEvent e){
-        for (GuiElement element : elements)
-            element.mousePressed(e);
+        if (elements.size() == 0) {
+            return ;
+        }
+        for (int index = elements.size() - 1; index >= 0; index--)
+            elements.get(index).mousePressed(e);
     }
 
     public void mouseReleased(MouseEvent e){

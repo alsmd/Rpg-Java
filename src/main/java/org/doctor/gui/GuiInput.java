@@ -1,6 +1,7 @@
 package org.doctor.gui;
 
 import org.doctor.DrawUtils;
+import org.doctor.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,8 +55,10 @@ public class GuiInput implements GuiElement{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (clickBox.contains(e.getPoint()))
+        if (clickBox.contains(e.getPoint())  && !Game.cliked.contains(e.getPoint())){
             currentState = State.FOCUS;
+            Game.cliked.add(e.getPoint());
+        }
         else
             currentState = State.NOFOCUS;
     }
@@ -141,5 +144,15 @@ public class GuiInput implements GuiElement{
 
     public String getText() {
         return text.toString();
+    }
+
+    public void setText(String text) {
+        this.text.delete(0, this.text.length());
+        this.text.append(text);
+    }
+
+    public void setPos(int x, int y){
+        this.clickBox.x = x;
+        this.clickBox.y = y;
     }
 }

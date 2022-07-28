@@ -1,6 +1,7 @@
 package org.doctor.gui;
 
 import org.doctor.DrawUtils;
+import org.doctor.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,32 +62,36 @@ public class GuiButton  implements  GuiElement{
         actionListeners.add(listener);
     }
     public void mousePressed(MouseEvent e){
-        if (clickBox.contains(e.getPoint())){
+        if (clickBox.contains(e.getPoint()) && !Game.cliked.contains(e.getPoint())){
             currentState = State.PRESSED;
             is_pressed = true;
+            Game.cliked.add(e.getPoint());
         }
     }
 
     public void mouseReleased(MouseEvent e){
-        if (clickBox.contains(e.getPoint()) && is_pressed){
+        if (clickBox.contains(e.getPoint()) && is_pressed && !Game.cliked.contains(e.getPoint())){
             for (ActionListener al : actionListeners)
                 al.actionPerformed(null);
+            Game.cliked.add(e.getPoint());
         }
         is_pressed = false;
         currentState = State.RELEASED;
     }
 
     public void mouseDragged(MouseEvent e){
-        if (clickBox.contains(e.getPoint())){
+        if (clickBox.contains(e.getPoint()) && !Game.cliked.contains(e.getPoint())){
             currentState = State.PRESSED;
+            Game.cliked.add(e.getPoint());
         }else{
             currentState = State.RELEASED;
         }
     }
 
     public void mouseMoved(MouseEvent e){
-        if (clickBox.contains(e.getPoint())){
+        if (clickBox.contains(e.getPoint()) && !Game.cliked.contains(e.getPoint())){
             currentState = State.HOVER;
+            Game.cliked.add(e.getPoint());
         }else{
             currentState = State.RELEASED;
         }

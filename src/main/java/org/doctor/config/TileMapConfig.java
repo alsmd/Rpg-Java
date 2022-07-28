@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TileMapConfig{
@@ -30,19 +32,14 @@ public class TileMapConfig{
 
     public TileMapConfig(){}
 
-    public boolean build(){
-        try{
-            spriteSheet = ImageIO.read(new FileInputStream(spriteSheetPath));
-            defaultBlock = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_4BYTE_ABGR);
-            Graphics2D g2 = (Graphics2D) defaultBlock.getGraphics();
-            g2.setColor(new Color(189, 163, 163, 12));
-            g2.fillRect(0, 0, tileSize, tileSize);
-            g2.dispose();
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
+    public boolean build() throws IOException {
+        spriteSheet = ImageIO.read(new FileInputStream(spriteSheetPath));
+        defaultBlock = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g2 = (Graphics2D) defaultBlock.getGraphics();
+        g2.setColor(new Color(189, 163, 163, 12));
+        g2.fillRect(0, 0, tileSize, tileSize);
+        g2.dispose();
+        return true;
     }
 
     public void save() throws Exception{
@@ -83,6 +80,8 @@ public class TileMapConfig{
 
     static public class Tile{
         /// Informations
+        public int x;
+        public int y;
         public boolean collition;
         public Position location;
 
